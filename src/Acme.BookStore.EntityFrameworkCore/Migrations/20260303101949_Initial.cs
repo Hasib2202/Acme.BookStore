@@ -564,14 +564,14 @@ namespace Acme.BookStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppBooks",
+                name: "AppAuthors",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    PublishDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    Bio = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
                     ExtraProperties = table.Column<string>(type: "text", nullable: false),
                     ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -581,7 +581,7 @@ namespace Acme.BookStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppBooks", x => x.Id);
+                    table.PrimaryKey("PK_AppAuthors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1095,6 +1095,34 @@ namespace Acme.BookStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppBooks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "text", nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppBooks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppBooks_AppAuthors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AppAuthors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ChatUserMessages",
                 columns: table => new
                 {
@@ -1531,6 +1559,11 @@ namespace Acme.BookStore.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppBooks_AuthorId",
+                table: "AppBooks",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ChatConversations_UserId",
                 table: "ChatConversations",
                 column: "UserId");
@@ -1778,6 +1811,9 @@ namespace Acme.BookStore.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpUsers");
+
+            migrationBuilder.DropTable(
+                name: "AppAuthors");
 
             migrationBuilder.DropTable(
                 name: "ChatMessages");

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Acme.BookStore.Books;
+using Acme.BookStore.Authors;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -35,6 +36,7 @@ public class BookStoreDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
     public DbSet<Book> Books { get; set; }
+    public DbSet<Author> Authors { get; set; }
 
     #region Entities from the modules
 
@@ -98,8 +100,37 @@ public class BookStoreDbContext :
         builder.Entity<Book>(b =>
         {
             b.ToTable(BookStoreConsts.DbTablePrefix + "Books", BookStoreConsts.DbSchema);
-            b.ConfigureByConvention(); //auto configure for the base class props
-            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            b.Property(x => x.Price)
+                .IsRequired();
+
+            // 🔹 Relationship
+            b.HasOne(x => x.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(x => x.AuthorId)
+                .IsRequired();
+        });
+
+        builder.Entity<Author>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Authors", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            b.Property(x => x.Email)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            b.Property(x => x.Bio)
+                .HasMaxLength(1024);
         });
     }
 }
