@@ -25,20 +25,24 @@ public class BookAppService : ApplicationService, IBookAppService
 
     public async Task<BookDto> GetAsync(Guid id)
     {
-        var book = await _repository.GetAsync(id);
+        var queryable = await _repository.WithDetailsAsync(x => x.Author);
+        var book = await AsyncExecuter.FirstOrDefaultAsync(queryable.Where(x => x.Id == id));
+
         return ObjectMapper.Map<Book, BookDto>(book);
     }
 
     public async Task<PagedResultDto<BookDto>> GetListAsync(PagedAndSortedResultRequestDto input)
     {
-        var queryable = await _repository.GetQueryableAsync();
-        var query = queryable
-            .OrderBy(input.Sorting.IsNullOrWhiteSpace() ? "Name" : input.Sorting)
-            .Skip(input.SkipCount)
-            .Take(input.MaxResultCount);
+        var queryable = await _repository.WithDetailsAsync(x => x.Author);
 
-        var books = await AsyncExecuter.ToListAsync(query);
         var totalCount = await AsyncExecuter.CountAsync(queryable);
+
+        var books = await AsyncExecuter.ToListAsync(
+            queryable
+                .OrderBy(input.Sorting.IsNullOrWhiteSpace() ? "Name" : input.Sorting)
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount)
+        );
 
         return new PagedResultDto<BookDto>(
             totalCount,

@@ -7,8 +7,10 @@ namespace Acme.BookStore;
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class BookStoreBookToBookDtoMapper : MapperBase<Book, BookDto>
 {
+    [MapProperty(nameof(Book.Author.Name), nameof(BookDto.AuthorName))]
     public override partial BookDto Map(Book source);
 
+    [MapProperty(nameof(Book.Author.Name), nameof(BookDto.AuthorName))]
     public override partial void Map(Book source, BookDto destination);
 }
 
