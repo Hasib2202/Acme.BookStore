@@ -32,5 +32,12 @@ function configureRoutes() {
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.Books',
       },
+      {
+        path: '/authors',
+        name: '::Menu:Authors',
+        iconClass: 'fas fa-user',
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Authors',
+      },
   ]);
 }
