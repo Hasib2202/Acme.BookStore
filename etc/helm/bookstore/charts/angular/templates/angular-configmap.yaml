@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-configmap
+data:
+  dynamic-env.json: |-
+    {
+        "production": "true",
+        "application": {
+            "baseUrl": "{{ include "bookstore.hosts.angular" . }}",
+            "name": "BookStore",
+            "logoUrl": ""
+        },
+        "oAuthConfig": {
+            "issuer": "{{ include "bookstore.hosts.authserver" . }}",
+            "redirectUri": "{{ include "bookstore.hosts.angular" . }}",
+            "requireHttps": "false",
+            "clientId": "BookStore_App",
+            "responseType": "code",
+            "scope": "offline_access BookStore",
+            "strictDiscoveryDocumentValidation": false,
+            "skipIssuerCheck": true
+        },
+        "apis": {
+            "default": {
+                "url": "{{ include "bookstore.hosts.httpapi" . }}",
+                "rootNamespace": "Acme.BookStore"
+            }
+        }
+    }

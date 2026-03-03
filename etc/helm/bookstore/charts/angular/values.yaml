@@ -1,0 +1,4 @@
+image:
+  repository: "bookstore/angular"
+  tag: "latest"
+  pullPolicy: IfNotPresent

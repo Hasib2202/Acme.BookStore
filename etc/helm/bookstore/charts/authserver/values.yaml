@@ -1,0 +1,4 @@
+image:
+  repository: "bookstore/authserver"
+  tag: "latest"
+  pullPolicy: IfNotPresent
