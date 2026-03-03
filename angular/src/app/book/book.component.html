@@ -74,6 +74,10 @@
           {{ row.price | currency }}
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-column 
+        [name]="'::Author' | abpLocalization" 
+        prop="authorName">
+      </ngx-datatable-column>
     </ngx-datatable>
   </div>
 </div>
@@ -122,6 +126,18 @@
             <i class="fa fa-calendar"></i>
           </button>
         </div>
+      </div>
+
+      <div class="mt-2">
+        <label for="book-author">Author</label><span> * </span>
+        <select class="form-control" id="book-author" formControlName="authorId">
+          <option [ngValue]="null">Select an author</option>
+          @for(author of authors; track $index){
+            <option [ngValue]="author.id">
+              {{ author.name }}
+            </option>
+          }
+        </select>
       </div>
     </form>
   </ng-template>
