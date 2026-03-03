@@ -25,6 +25,7 @@ import {
   ModalComponent
 } from '@abp/ng.theme.shared';
 import { BookService, BookDto, bookTypeOptions } from '../proxy/books';
+import { AuthorService, AuthorDto } from '../proxy/authors';
 
 @Component({
   selector: 'app-book',
@@ -52,11 +53,13 @@ export class BookComponent implements OnInit {
   private bookService = inject(BookService);
   private fb = inject(FormBuilder);
   private confirmation = inject(ConfirmationService);
+  private authorService = inject(AuthorService);
 
   book = { items: [], totalCount: 0 } as PagedResultDto<BookDto>;
   selectedBook = {} as BookDto; // declare selectedBook
   form: FormGroup;
   bookTypes = bookTypeOptions;
+  authors: AuthorDto[] = [];
   isModalOpen = false;
 
   ngOnInit() {
@@ -64,6 +67,18 @@ export class BookComponent implements OnInit {
 
     this.list.hookToQuery(bookStreamCreator).subscribe(response => {
       this.book = response;
+    });
+
+    this.loadAuthors();
+  }
+
+  loadAuthors() {
+      this.authorService.getList({
+      skipCount: 0,
+      maxResultCount: 50,
+      sorting: 'name'
+    }).subscribe(response => {
+      this.authors = response.items;
     });
   }
 
@@ -92,9 +107,12 @@ export class BookComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       name: [this.selectedBook.name || '', Validators.required],
+      authorId: [this.selectedBook.authorId || null, Validators.required],
       type: [this.selectedBook.type || null, Validators.required],
       publishDate: [
-        this.selectedBook.publishDate ? this.parseDate(this.selectedBook.publishDate) : null,
+        this.selectedBook.publishDate
+          ? this.parseDate(this.selectedBook.publishDate)
+          : null,
         Validators.required,
       ],
       price: [this.selectedBook.price || null, Validators.required],

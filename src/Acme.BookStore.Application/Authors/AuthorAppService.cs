@@ -12,7 +12,6 @@ using Volo.Abp;
 
 namespace Acme.BookStore.Authors;
 
-[RemoteService(IsEnabled = false)]
 [Authorize(BookStorePermissions.Authors.Default)]
 public class AuthorAppService : ApplicationService, IAuthorAppService
 {

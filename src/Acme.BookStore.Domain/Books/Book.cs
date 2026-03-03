@@ -18,5 +18,5 @@ public class Book : AuditedAggregateRoot<Guid>
     public Guid AuthorId { get; set; }
 
     // 🔹 Navigation Property
-    public Author Author { get; set; }
+    public Author? Author { get; set; }
 }

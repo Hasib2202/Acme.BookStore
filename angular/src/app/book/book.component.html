@@ -102,7 +102,7 @@
 
       <div class="mt-2">
         <label for="book-type">Type</label><span> * </span>
-        <select class="form-control" id="book-type" formControlName="type">
+        <select class="form-select" id="book-type" formControlName="type">
           <option [ngValue]="null">Select a book type</option>
           @for(type of bookTypes; track $index){
           <option [ngValue]="type.value"> 
@@ -130,7 +130,7 @@
 
       <div class="mt-2">
         <label for="book-author">Author</label><span> * </span>
-        <select class="form-control" id="book-author" formControlName="authorId">
+        <select class="form-select" id="book-author" formControlName="authorId">
           <option [ngValue]="null">Select an author</option>
           @for(author of authors; track $index){
             <option [ngValue]="author.id">
