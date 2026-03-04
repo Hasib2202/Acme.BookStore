@@ -22,6 +22,7 @@ using Volo.Saas.EntityFrameworkCore;
 using Volo.Saas.Editions;
 using Volo.Saas.Tenants;
 using Volo.Abp.Gdpr;
+using Acme.BookStore.Categories;
 
 namespace Acme.BookStore.EntityFrameworkCore;
 
@@ -37,6 +38,7 @@ public class BookStoreDbContext :
 
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     #region Entities from the modules
 
@@ -114,6 +116,11 @@ public class BookStoreDbContext :
                 .WithMany(a => a.Books)
                 .HasForeignKey(x => x.AuthorId)
                 .IsRequired();
+
+            //b.HasOne(x => x.Category)
+            //    .WithMany(a => a.Books)
+            //    .HasForeignKey(x => x.CategoryId)
+            //    .IsRequired();
         });
 
         builder.Entity<Author>(b =>
@@ -131,6 +138,15 @@ public class BookStoreDbContext :
 
             b.Property(x => x.Bio)
                 .HasMaxLength(1024);
+        });
+
+        builder.Entity<Category>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Categories", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(128);
         });
     }
 }
