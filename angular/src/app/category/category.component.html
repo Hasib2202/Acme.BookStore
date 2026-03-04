@@ -23,10 +23,10 @@
     </div>
   </div>
   <div class="card-body">
-    <ngx-datatable [rows]="category.items" [count]="category.totalCount" [list]="list" default>
+    <ngx-datatable [rows]="category.items" [count]="category.totalCount" [list]="list" [columnMode]="'force'" default>
       <ngx-datatable-column
         [name]="'::Actions' | abpLocalization"
-        [maxWidth]="150"
+        [width]="150"
         [sortable]="false"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -41,14 +41,14 @@
             </button>
             <div ngbDropdownMenu>
               <button
-                *abpPermission="'BookStore.Authors.Edit'"
+                *abpPermission="'BookStore.Categories.Edit'"
                 ngbDropdownItem
                 (click)="editCategory(row.id)"
               >
                 {{ '::Edit' | abpLocalization }}
               </button>
               <button
-                *abpPermission="'BookStore.Authors.Delete'"
+                *abpPermission="'BookStore.Categories.Delete'"
                 ngbDropdownItem
                 (click)="delete(row.id)"
               >
@@ -58,7 +58,7 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="250"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Description' | abpLocalization" prop="description"></ngx-datatable-column>
     </ngx-datatable>
   </div>
