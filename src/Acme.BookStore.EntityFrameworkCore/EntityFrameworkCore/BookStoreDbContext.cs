@@ -117,10 +117,10 @@ public class BookStoreDbContext :
                 .HasForeignKey(x => x.AuthorId)
                 .IsRequired();
 
-            //b.HasOne(x => x.Category)
-            //    .WithMany(a => a.Books)
-            //    .HasForeignKey(x => x.CategoryId)
-            //    .IsRequired();
+            b.HasOne(x => x.Category)
+                .WithMany()
+                .HasForeignKey(x => x.CategoryId)
+                .IsRequired();
         });
 
         builder.Entity<Author>(b =>

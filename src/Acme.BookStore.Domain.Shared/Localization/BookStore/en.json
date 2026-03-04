@@ -43,6 +43,7 @@
     "NewBook": "New book",
     "Name": "Name",
     "Type": "Type",
+    "Category": "Category",
     "Price": "Price",
     "CreationTime": "Creation time",
     "AreYouSure": "Are you sure?",

@@ -24,8 +24,9 @@ import {
   ModalCloseDirective,
   ModalComponent
 } from '@abp/ng.theme.shared';
-import { BookService, BookDto, bookTypeOptions } from '../proxy/books';
+import { BookService, BookDto } from '../proxy/books';
 import { AuthorService, AuthorDto } from '../proxy/authors';
+import { CategoryService, CategoryDto } from '../proxy/categories';
 
 @Component({
   selector: 'app-book',
@@ -54,12 +55,13 @@ export class BookComponent implements OnInit {
   private fb = inject(FormBuilder);
   private confirmation = inject(ConfirmationService);
   private authorService = inject(AuthorService);
+  private categoryService = inject(CategoryService);
 
   book = { items: [], totalCount: 0 } as PagedResultDto<BookDto>;
   selectedBook = {} as BookDto; // declare selectedBook
   form: FormGroup;
-  bookTypes = bookTypeOptions;
   authors: AuthorDto[] = [];
+  categories: CategoryDto[] = [];
   isModalOpen = false;
 
   ngOnInit() {
@@ -70,6 +72,7 @@ export class BookComponent implements OnInit {
     });
 
     this.loadAuthors();
+    this.loadCategories();
   }
 
   loadAuthors() {
@@ -79,6 +82,16 @@ export class BookComponent implements OnInit {
       sorting: 'name'
     }).subscribe(response => {
       this.authors = response.items;
+    });
+  }
+
+  loadCategories() {
+    this.categoryService.getList({
+      skipCount: 0,
+      maxResultCount: 50,
+      sorting: 'name'
+    }).subscribe(response => {
+      this.categories = response.items;
     });
   }
 
@@ -108,7 +121,7 @@ export class BookComponent implements OnInit {
     this.form = this.fb.group({
       name: [this.selectedBook.name || '', Validators.required],
       authorId: [this.selectedBook.authorId || null, Validators.required],
-      type: [this.selectedBook.type || null, Validators.required],
+      categoryId: [this.selectedBook.categoryId || null, Validators.required],
       publishDate: [
         this.selectedBook.publishDate
           ? this.parseDate(this.selectedBook.publishDate)

@@ -42,7 +42,6 @@ public abstract class BookAppService_Tests<TStartupModule> : BookStoreApplicatio
                 Name = "New test book 42",
                 Price = 10,
                 PublishDate = DateTime.Now,
-                Type = BookType.ScienceFiction
             }
         );
 
@@ -62,7 +61,6 @@ public abstract class BookAppService_Tests<TStartupModule> : BookStoreApplicatio
                     Name = "",
                     Price = 10,
                     PublishDate = DateTime.Now,
-                    Type = BookType.ScienceFiction
                 }
             );
         });

@@ -10,9 +10,6 @@ public class CreateUpdateBookDto
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    public BookType Type { get; set; } = BookType.Undefined;
-
-    [Required]
     [DataType(DataType.Date)]
     public DateTime PublishDate { get; set; } = DateTime.Now;
 
@@ -21,4 +18,7 @@ public class CreateUpdateBookDto
 
     [Required]
     public Guid AuthorId { get; set; }
+
+    [Required]
+    public Guid CategoryId { get; set; }
 }
