@@ -25,7 +25,7 @@ public class BookAppService : ApplicationService, IBookAppService
 
     public async Task<BookDto> GetAsync(Guid id)
     {
-        var queryable = await _repository.WithDetailsAsync(x => x.Author);
+        var queryable = await _repository.WithDetailsAsync(x => x.Author, x => x.Category);
         var book = await AsyncExecuter.FirstOrDefaultAsync(queryable.Where(x => x.Id == id));
 
         return ObjectMapper.Map<Book, BookDto>(book);
@@ -33,7 +33,7 @@ public class BookAppService : ApplicationService, IBookAppService
 
     public async Task<PagedResultDto<BookDto>> GetListAsync(PagedAndSortedResultRequestDto input)
     {
-        var queryable = await _repository.WithDetailsAsync(x => x.Author);
+        var queryable = await _repository.WithDetailsAsync(x => x.Author, x => x.Category);
 
         var totalCount = await AsyncExecuter.CountAsync(queryable);
 
