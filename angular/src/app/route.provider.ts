@@ -41,5 +41,13 @@ function configureRoutes() {
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.Authors',
       },
+      {
+        path: '/categories',
+        name: '::Menu:Categories',
+        iconClass: 'fas fa-tags',
+        order: 5,
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Categories',
+      }
   ]);
 }

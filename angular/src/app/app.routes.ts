@@ -71,5 +71,9 @@ export const APP_ROUTES: Routes = [
     loadComponent: () => import('./author/author.component').then(c => c.AuthorComponent),
     canActivate: [authGuard, permissionGuard],
   },
-  
+  {
+    path: 'categories',
+    loadComponent: () => import('./category/category.component').then(c => c.CategoryComponent),
+    canActivate: [authGuard, permissionGuard],
+  },
 ];

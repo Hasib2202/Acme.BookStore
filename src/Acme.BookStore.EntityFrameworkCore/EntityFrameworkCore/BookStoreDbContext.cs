@@ -144,9 +144,14 @@ public class BookStoreDbContext :
         {
             b.ToTable(BookStoreConsts.DbTablePrefix + "Categories", BookStoreConsts.DbSchema);
             b.ConfigureByConvention();
+
             b.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(128);
+
+            b.Property(x => x.Description)
+                .IsRequired()
+                .HasMaxLength(512);
         });
     }
 }

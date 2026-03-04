@@ -65,9 +65,21 @@
     "Menu:Home": "Home",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
     "Welcome": "Welcome",
-
     "Menu:Authors": "Authors",
     "Author": "Author",
-    "NewAuthor": "New Author"
+    "NewAuthor": "New Author",
+    "Menu:Categories": "Categories",
+    "Permission:Categories": "Category Management",
+    "Permission:Categories.Create": "Creating new categories",
+    "Permission:Categories.Edit": "Editing the categories",
+    "Permission:Categories.Delete": "Deleting the categories",
+    "NewCategory": "New Category",
+    "Description": "Description",
+    "Permission:Authors": "Authors",
+    "Permission:Authors.Create": "Creating new authors",
+    "Permission:Authors.Edit": "Creating new authors",
+    "Permission:Authors.Delete": "Creating new authors"
+
+
   }
 }

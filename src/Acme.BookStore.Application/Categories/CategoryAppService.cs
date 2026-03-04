@@ -12,7 +12,7 @@ using Volo.Abp;
 
 namespace Acme.BookStore.Categories;
 
-[Authorize(BookStorePermissions.Authors.Default)]
+[Authorize(BookStorePermissions.Categories.Default)]
 public class CategoryAppService : ApplicationService, ICategoryAppService
 {
     private readonly IRepository<Category, Guid> _repository;
@@ -68,7 +68,7 @@ public class CategoryAppService : ApplicationService, ICategoryAppService
         return ObjectMapper.Map<Category, CategoryDto>(category);
     }
 
-    [Authorize(BookStorePermissions.Authors.Delete)]
+    [Authorize(BookStorePermissions.Categories.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _repository.DeleteAsync(id);
